@@ -14,46 +14,46 @@ import com.example.banderas.R
 import com.example.banderas.ui.theme.BANDERASTheme
 
 @Composable
-fun BanderaItaliaConstraint(modifier: Modifier = Modifier) {
+fun BanderaAlemaniaConstraint(modifier: Modifier = Modifier) {
     ConstraintLayout(modifier = modifier.fillMaxSize()) {
         val (caja1, caja2, caja3) = createRefs()
-        val linea1 = createGuidelineFromStart(0.333f)
-        val linea2 = createGuidelineFromStart(0.666f)
+        val linea1 = createGuidelineFromTop(0.333f)
+        val linea2 = createGuidelineFromTop(0.666f)
 
         Box(
             modifier = Modifier
-                .background(colorResource(id = R.color.Verde_Italia))
+                .background(Color.Black)
                 .constrainAs(caja1) {
+                    top.linkTo(parent.top)
+                    bottom.linkTo(linea1)
                     start.linkTo(parent.start)
-                    end.linkTo(linea1)
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                    width = Dimension.fillToConstraints
-                    height = Dimension.fillToConstraints
-                }
-        )
-
-        Box(
-            modifier = Modifier
-                .background(Color.White)
-                .constrainAs(caja2) {
-                    start.linkTo(linea1)
-                    end.linkTo(linea2)
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                    width = Dimension.fillToConstraints
-                    height = Dimension.fillToConstraints
-                }
-        )
-
-        Box(
-            modifier = Modifier
-                .background(colorResource(id = R.color.Rojo_Italia))
-                .constrainAs(caja3) {
-                    start.linkTo(linea2)
                     end.linkTo(parent.end)
-                    top.linkTo(parent.top)
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                }
+        )
+
+        Box(
+            modifier = Modifier
+                .background(colorResource(id = R.color.Rojo_Aleman))
+                .constrainAs(caja2) {
+                    top.linkTo(linea1)
+                    bottom.linkTo(linea2)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                }
+        )
+
+        Box(
+            modifier = Modifier
+                .background(colorResource(id = R.color.Amarillo_Aleman))
+                .constrainAs(caja3) {
+                    top.linkTo(linea2)
                     bottom.linkTo(parent.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
                     width = Dimension.fillToConstraints
                     height = Dimension.fillToConstraints
                 }
@@ -63,8 +63,8 @@ fun BanderaItaliaConstraint(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun BanderaItaliaPreview() {
+fun BanderaAlemaniaPreview() {
     BANDERASTheme {
-        BanderaItaliaConstraint(modifier = Modifier.fillMaxSize())
+        BanderaAlemaniaConstraint(modifier = Modifier.fillMaxSize())
     }
 }
