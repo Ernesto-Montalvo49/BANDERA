@@ -1,49 +1,85 @@
 package com.example.banderas.Screens
 
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.banderas.R
 import com.example.banderas.ui.theme.BANDERASTheme
+import kotlin.math.PI
+import kotlin.math.cos
+import kotlin.math.sin
 
 @Composable
-fun BanderaSuiza(modifier: Modifier = Modifier) {
-    Box(
+fun BanderaTurquia(modifier: Modifier = Modifier) {
+    Column(
         modifier = modifier
             .fillMaxSize()
-            .aspectRatio(1f)
-            .background(colorResource(id = R.color.Rojo_Suiza))
+            .background(colorResource(id = R.color.Rojo_Turquia))
     ) {
-        Box(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .fillMaxWidth(0.2f)
-                .fillMaxHeight(0.62f)
-                .background(Color.White)
-        )
-        Box(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .fillMaxHeight(0.2f)
-                .fillMaxWidth(0.62f)
-                .background(Color.White)
-        )
+        Row(modifier = Modifier.fillMaxSize()) {
+            Box(modifier = Modifier.fillMaxSize()) {
+                Canvas(modifier = Modifier.fillMaxSize()) {
+                    val cy = size.height / 2f
+                    val rojoFondo = Color(0xFFE30A17)
+
+                    val rOut = size.height * 0.22f
+
+                    drawCircle(
+                        color = Color.White,
+                        radius = rOut,
+                        center = Offset(size.width * 0.50f, cy)
+                    )
+                    drawCircle(
+                        color = rojoFondo,
+                        radius = size.height * 0.176f,
+                        center = Offset(size.width * 0.50f + size.height * 0.066f, cy)
+                    )
+
+                    val starCenter = Offset(size.width * 0.9f, cy)
+                    val starOuterRadius = size.height * 0.055f
+                    val starInnerRadius = starOuterRadius * 0.382f
+
+                    val starPath = Path()
+                    val angleOffset = 1f * (PI.toFloat() / 180f)
+
+                    for (i in 0 until 10) {
+                        val radius = if (i % 2 == 0) starOuterRadius else starInnerRadius
+                        val angle = (i * PI / 5) - (PI / 2) + angleOffset
+                        val x = starCenter.x + radius * cos(angle).toFloat()
+                        val y = starCenter.y + radius * sin(angle).toFloat()
+
+                        if (i == 0) {
+                            starPath.moveTo(x, y)
+                        } else {
+                            starPath.lineTo(x, y)
+                        }
+                    }
+                    starPath.close()
+
+                    drawPath(
+                        path = starPath,
+                        color = Color.White
+                    )
+                }
+            }
+        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun BanderaSuizaPreview() {
+fun BanderaTurquiaPreview() {
     BANDERASTheme {
-        BanderaSuiza(modifier = Modifier.fillMaxSize())
+        BanderaTurquia(modifier = Modifier.fillMaxSize())
     }
 }
