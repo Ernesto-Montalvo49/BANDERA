@@ -4,76 +4,64 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.banderas.R
 import com.example.banderas.ui.theme.BANDERASTheme
-import androidx.compose.ui.graphics.Path
-import kotlin.math.tan
+import kotlin.math.PI
+import kotlin.math.cos
+import kotlin.math.sin
 
 @Composable
-fun BanderaSeychelles(modifier : Modifier= Modifier){
-    val azul= colorResource(id = R.color.Azul_Seychelles)
-    val rojo = colorResource(id = R.color.Rojo_Seychelles)
-    val verde = colorResource(id = R.color.Verde_Seychelles)
-    val amarillo = colorResource(id = R.color.Amarillo_Seychelles)
-
-    val colores = listOf(azul, amarillo, rojo, Color.White, verde)
-    val angles = listOf(90f, 72f, 54f, 36f, 18f, 0f)
+fun BanderaPapuaNuevaGuinea(modifier: Modifier = Modifier) {
+    val rojoColor = colorResource(id = R.color.Rojo_Papua)
+    val amarilloColor = colorResource(id = R.color.Amarillo_Papua)
 
     Canvas(modifier = modifier.fillMaxSize()) {
         val width = size.width
         val height = size.height
-        val origin = Offset(0f, height)
 
-        fun getBorderPoint(angleDegrees: Float): Offset {
-            if (angleDegrees == 90f) return Offset(0f, 0f)
-            if (angleDegrees == 0f) return Offset(width, height)
+        drawRect(color = Color.Black)
 
-            val rad = Math.toRadians(angleDegrees.toDouble())
-            val xCandidate = (height / tan(rad)).toFloat()
+        val pathRojo = Path().apply {
+            moveTo(0f, 0f)
+            lineTo(width, 0f)
+            lineTo(width, height)
+            close()
+        }
+        drawPath(path = pathRojo, color = rojoColor)
 
-            return if (xCandidate <= width) {
-                Offset(xCandidate, 0f)
-            } else {
-                val yCandidate = height - (width * tan(rad)).toFloat()
-                Offset(width, yCandidate)
+        fun drawStar(centerX: Float, centerY: Float, outerRadius: Float, color: Color) {
+            val starPath = Path()
+            val innerRadius = outerRadius * 0.382f
+            for (i in 0 until 10) {
+                val r = if (i % 2 == 0) outerRadius else innerRadius
+                val angle = (i * PI / 5) - (PI / 2)
+                val x = centerX + r * cos(angle).toFloat()
+                val y = centerY + r * sin(angle).toFloat()
+                if (i == 0) starPath.moveTo(x, y) else starPath.lineTo(x, y)
             }
+            starPath.close()
+            drawPath(path = starPath, color = color)
         }
 
-        for (i in 0 until 5) {
-            val startAngle = angles[i]
-            val endAngle = angles[i + 1]
+        drawStar(width * 0.35f, height * 0.58f, height * 0.040f, Color.White)
+        drawStar(width * 0.15f, height * 0.65f, height * 0.040f, Color.White)
 
-            val pA = getBorderPoint(startAngle)
-            val pB = getBorderPoint(endAngle)
+        drawStar(width * 0.25f, height * 0.30f, height * 0.09f, amarilloColor)
 
-            val path = Path().apply {
-                moveTo(origin.x, origin.y)
-                lineTo(pA.x, pA.y)
-
-                if (pA.y == 0f && pB.x == width) {
-                    lineTo(width, 0f)
-                }
-
-                lineTo(pB.x, pB.y)
-                close()
-            }
-
-            drawPath(
-                path = path,
-                color = colores[i]
-            )
-        }
+        drawStar(width * 0.62f, height * 0.18f, height * 0.035f, Color.White)
+        drawStar(width * 0.78f, height * 0.30f, height * 0.035f, Color.White)
+        drawStar(width * 0.70f, height * 0.48f, height * 0.030f, Color.White)
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun BanderaSeychellesPreview(){
-    BANDERASTheme{
-        BanderaSeychelles(modifier = Modifier.fillMaxSize())
+fun BanderaPapuaNuevaGuineaPreview() {
+    BANDERASTheme {
+        BanderaPapuaNuevaGuinea(modifier = Modifier.fillMaxSize())
     }
 }
