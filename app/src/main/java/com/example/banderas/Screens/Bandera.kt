@@ -14,7 +14,7 @@ import com.example.banderas.R
 import com.example.banderas.ui.theme.BANDERASTheme
 
 @Composable
-fun BanderaFranciaConstraint(modifier: Modifier = Modifier) {
+fun BanderaItaliaConstraint(modifier: Modifier = Modifier) {
     ConstraintLayout(modifier = modifier.fillMaxSize()) {
         val (caja1, caja2, caja3) = createRefs()
         val linea1 = createGuidelineFromStart(0.333f)
@@ -22,14 +22,14 @@ fun BanderaFranciaConstraint(modifier: Modifier = Modifier) {
 
         Box(
             modifier = Modifier
-                .background(colorResource(id = R.color.Azul_Francia))
+                .background(colorResource(id = R.color.Verde_Italia))
                 .constrainAs(caja1) {
                     start.linkTo(parent.start)
                     end.linkTo(linea1)
                     top.linkTo(parent.top)
                     bottom.linkTo(parent.bottom)
-                    height = Dimension.fillToConstraints
                     width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
                 }
         )
 
@@ -41,21 +41,21 @@ fun BanderaFranciaConstraint(modifier: Modifier = Modifier) {
                     end.linkTo(linea2)
                     top.linkTo(parent.top)
                     bottom.linkTo(parent.bottom)
-                    height = Dimension.fillToConstraints
                     width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
                 }
         )
 
         Box(
             modifier = Modifier
-                .background(colorResource(id = R.color.Rojo_Francia))
+                .background(colorResource(id = R.color.Rojo_Italia))
                 .constrainAs(caja3) {
                     start.linkTo(linea2)
                     end.linkTo(parent.end)
                     top.linkTo(parent.top)
                     bottom.linkTo(parent.bottom)
-                    height = Dimension.fillToConstraints
                     width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
                 }
         )
     }
@@ -63,8 +63,8 @@ fun BanderaFranciaConstraint(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun BanderaFranciaPreview() {
+fun BanderaItaliaPreview() {
     BANDERASTheme {
-        BanderaFranciaConstraint(modifier = Modifier.fillMaxSize())
+        BanderaItaliaConstraint(modifier = Modifier.fillMaxSize())
     }
 }
