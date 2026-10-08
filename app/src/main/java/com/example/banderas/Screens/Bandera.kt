@@ -16,13 +16,13 @@ import com.example.banderas.ui.theme.BANDERASTheme
 
 
 @Composable
-fun BanderaFrancia(modifier: Modifier = Modifier) {
+fun BanderaItalia(modifier: Modifier = Modifier) {
     Row(modifier = modifier.fillMaxSize()) {
         Box(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxHeight()
-                .background(colorResource(id = R.color.azul_francia))
+                .background(colorResource(id = R.color.Verde_Italia))
         )
 
         Box(modifier = Modifier
@@ -36,7 +36,7 @@ fun BanderaFrancia(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .weight(1f)
                 .fillMaxHeight()
-                .background(colorResource(id = R.color.rojo_francia))
+                .background(colorResource(id = R.color.Rojo_Italia))
         )
 
 
@@ -45,8 +45,8 @@ fun BanderaFrancia(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun BanderaFranciaPreview() {
+fun BanderaItaliaPreview() {
     BANDERASTheme {
-        BanderaFrancia()
+        BanderaItalia()
     }
 }
