@@ -7,6 +7,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="Amarillo_Aleman">#FFFFCE00</color>
-    <color name="Rojo_Aleman">#FFDD0000</color>
+    <color name="rojo_espana">#AA151B</color>
+    <color name="amarillo_espana">#F1BF00</color>
 </resources>
