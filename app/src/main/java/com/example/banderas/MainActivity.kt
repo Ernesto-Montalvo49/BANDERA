@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import com.example.banderas.Screens.BanderaEEUUConstraint
+import com.example.banderas.Screens.BanderaSuiza
 import com.example.banderas.ui.theme.BANDERASTheme
 
 class MainActivity : ComponentActivity() {
@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BANDERASTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BanderaEEUUConstraint(
+                    BanderaSuiza(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
