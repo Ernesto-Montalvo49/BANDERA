@@ -1,101 +1,69 @@
 package com.example.banderas.Screens
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.banderas.R
 import com.example.banderas.ui.theme.BANDERASTheme
-import kotlin.math.cos
-import kotlin.math.sin
 
 @Composable
-fun BanderaIsrael(modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(Color.White)
-    ) {
+fun BanderaCuba(modifier : Modifier = Modifier){
+    val azulCuba = colorResource(id = R.color.Azul_Cuba)
+    val rojoCuba = colorResource(id = R.color.Rojo_Cuba)
+    Canvas(modifier = Modifier.fillMaxSize()) {
+        val band = size.height /5f
 
-        Box(
-            modifier = Modifier
-                .weight(0.2f)
-                .fillMaxWidth()
-                .background(Color.White)
-        )
-
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
-                .background(colorResource(id = R.color.Azul_Israel))
-        )
-
-        Box(
-            modifier = Modifier
-                .weight(4f)
-                .fillMaxWidth(),
-            contentAlignment = Alignment.Center
-        ) {
-            val blueColor = colorResource(id = R.color.Azul_Israel)
-            Canvas(modifier = Modifier.fillMaxSize()) {
-                val cx = size.width / 2f
-                val cy = size.height / 2f
-                val radius = size.minDimension * 0.42f
-
-                val triangleUp = trianglePath(cx, cy, radius, -90f)
-                val triangleDown = trianglePath(cx, cy, radius, 90f)
-
-                drawPath(
-                    path = triangleUp,
-                    color = blueColor,
-                    style = Stroke(width = 70f)
-                )
-                drawPath(
-                    path = triangleDown,
-                    color = blueColor,
-                    style = Stroke(width = 70f)
-                )
-            }
+        for (i in 0 until 5){
+            if(i % 2 ==0) drawRect(
+                color = azulCuba,
+                topLeft = Offset(0f, i * band),
+                size = Size(size.width, band)
+            )
         }
+        val triWidth = size.width * 0.38f
+        val trianglePath = Path().apply {
+            moveTo(0f, 0f)
+            lineTo(triWidth, size.height / 2f)
+            lineTo(0f, size.height)
+            close()
+        }
+        drawPath(path = trianglePath, color = rojoCuba)
+        val starCenterX = triWidth * 0.38f
+        val starCenterY = size.height / 2f
+        val starRadius = size.minDimension * 0.08f
+        val starPath = createStarPath(starCenterX, starCenterY, starRadius)
 
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
-                .background(colorResource(id = R.color.Azul_Israel))
-        )
-
-        Box(
-            modifier = Modifier
-                .weight(0.2f)
-                .fillMaxWidth()
-                .background(Color.White)
+        drawPath(
+            path = starPath,
+            color = Color.White
         )
     }
 }
 
-fun trianglePath(cx: Float, cy: Float, r: Float, rotationDeg: Float): Path {
+fun createStarPath(cx: Float, cy: Float, radius: Float): Path {
     val path = Path()
-    for (i in 0..2) {
-        val angle = Math.toRadians((rotationDeg + i * 120).toDouble())
-        val x = cx + r * cos(angle).toFloat()
-        val y = cy + r * sin(angle).toFloat()
-        if (i == 0) {
-            path.moveTo(x, y)
-        } else {
-            path.lineTo(x, y)
-        }
+    val numPoints = 5
+    val degreesPerPoint = 360f / numPoints
+    val halfDegreesPerPoint = degreesPerPoint / 2f
+
+    val innerRadius = radius * 0.382f
+    for (i in 0 until numPoints * 2) {
+        val angleDeg = -90f + (i * halfDegreesPerPoint)
+        val angleRad = Math.toRadians(angleDeg.toDouble()).toFloat()
+
+        val r = if (i % 2 == 0) radius else innerRadius
+
+        val x = cx + r * kotlin.math.cos(angleRad)
+        val y = cy + r * kotlin.math.sin(angleRad)
+
+        if (i == 0) path.moveTo(x, y) else path.lineTo(x, y)
     }
     path.close()
     return path
@@ -103,8 +71,8 @@ fun trianglePath(cx: Float, cy: Float, r: Float, rotationDeg: Float): Path {
 
 @Preview(showBackground = true)
 @Composable
-fun BanderaIsraelPreview() {
-    BANDERASTheme {
-        BanderaIsrael(modifier = Modifier.fillMaxSize())
+fun BanderaCubaPreview(){
+    BANDERASTheme{
+        BanderaCuba(modifier = Modifier.fillMaxSize())
     }
 }
