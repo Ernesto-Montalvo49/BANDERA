@@ -1,58 +1,58 @@
 package com.example.banderas.Screens
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.banderas.R
 import com.example.banderas.ui.theme.BANDERASTheme
 
+val RomboShape = GenericShape { size, _ ->
+    moveTo(size.width / 2f, 0f)
+    lineTo(size.width, size.height / 2f)
+    lineTo(size.width / 2f, size.height)
+    lineTo(0f, size.height / 2f)
+    close()
+}
+
 @Composable
-fun BanderaArgentina(modifier: Modifier = Modifier) {
-    Column(modifier = modifier.fillMaxSize()) {
+fun BanderaBrasil(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .background(colorResource(id=R.color.Verde_Brasil)),
+        contentAlignment = Alignment.Center
+    ) {
         Box(
             modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
-                .background(colorResource(id = R.color.celeste_argentina))
+                .fillMaxSize()
+                .padding(horizontal = 90.dp, vertical = 100.dp)
+                .clip(RomboShape)
+                .background(colorResource(id=R.color.Amarillo_Brasil))
         )
         Box(
             modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
-                .background(Color.White),
-            contentAlignment = Alignment.Center
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.sol_de_mayo),
-                contentDescription = "Sol de Mayo",
-                modifier = Modifier.size(280.dp)
-            )
-        }
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
-                .background(colorResource(id = R.color.celeste_argentina))
+                .size(110.dp)
+                .clip(CircleShape)
+                .background(colorResource(id=R.color.Azul_Brasil))
         )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun BanderaArgentinaPreview() {
+fun BanderaBrasilPreview() {
     BANDERASTheme {
-        BanderaArgentina()
+        BanderaBrasil()
     }
 }
