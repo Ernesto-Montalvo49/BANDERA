@@ -1,94 +1,87 @@
 package com.example.banderas.Screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
+import com.example.banderas.R
+
 import com.example.banderas.ui.theme.BANDERASTheme
 
-val EstrellaEEUUShape = GenericShape { size, _ ->
-    val cx = size.width / 2f
-    val cy = size.height / 2f
-    val outerRadius = size.width / 2f
-    val innerRadius = outerRadius * 0.4f
-    val angle = Math.PI / 5
-
-    for (i in 0 until 10) {
-        val r = if (i % 2 == 0) outerRadius else innerRadius
-        val x = cx + r * Math.sin(i * angle).toFloat()
-        val y = cy - r * Math.cos(i * angle).toFloat()
-        if (i == 0) moveTo(x, y) else lineTo(x, y)
-    }
-    close()
-}
-
 @Composable
-fun BanderaEU(modifier: Modifier = Modifier) {
-    Box(modifier = modifier.fillMaxSize()) {
-        Column(Modifier.fillMaxSize()) {
-            repeat(13) { index ->
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth()
-                        .background(if (index % 2 == 0) Color(0xFFB22234) else Color.White)
-                )
-            }
-        }
+fun BanderaMexicoConstraint(modifier: Modifier = Modifier) {
+    ConstraintLayout(modifier = modifier.fillMaxSize()) {
+        val (caja, caja1, caja3, escudo_mexico) = createRefs()
+        val line1= createGuidelineFromStart(0.33f)
+        val linea2= createGuidelineFromStart(0.66f)
 
         Box(
             modifier = Modifier
-                .fillMaxWidth(0.4f)
-                .fillMaxHeight(0.538f)
-                .background(Color(0xFF3C3B6E))
-                .padding(vertical = 4.dp, horizontal = 2.dp)
-        ) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.SpaceEvenly,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                repeat(5) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f),
-                        horizontalArrangement = Arrangement.SpaceEvenly,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        repeat(6) {
-                            Box(
-                                modifier = Modifier
-                                    .size(8.dp)
-                                    .clip(EstrellaEEUUShape)
-                                    .background(Color.White)
-                            )
-                        }
-                    }
+                .background(colorResource(id = R.color.Verde_Mexico))
+                .constrainAs(caja) {
+                    start.linkTo(parent.start)
+                    end.linkTo(line1)
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    height= Dimension.fillToConstraints
+                    width = Dimension.fillToConstraints
                 }
-            }
-        }
+        )
+
+        Box(
+            modifier = Modifier
+                .background(Color.White)
+                .constrainAs(caja1){
+                    start.linkTo(line1)
+                    end.linkTo(linea2)
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    height= Dimension.fillToConstraints
+                    width = Dimension.fillToConstraints
+                })
+
+        Box(
+            modifier = Modifier
+                .background(colorResource(id = R.color.Rojo_Mexico))
+                .constrainAs(caja3){
+                    start.linkTo(linea2)
+                    end.linkTo(parent.end)
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    height= Dimension.fillToConstraints
+                    width = Dimension.fillToConstraints
+                }
+        )
+
+        Image(
+            painter = painterResource(id= R.drawable.escudo_mexico),
+            contentDescription = "Escudo_Mexico",
+            modifier=Modifier
+                .size(120.dp)
+                .constrainAs(escudo_mexico){
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                }
+        )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun BanderaEUPreview() {
+fun BanderaMexicoPreview() {
     BANDERASTheme {
-        BanderaEU()
+        BanderaMexicoConstraint(modifier = Modifier.fillMaxSize())
     }
 }
