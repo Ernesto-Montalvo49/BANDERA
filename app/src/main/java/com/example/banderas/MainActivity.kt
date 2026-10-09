@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.example.banderas.ui.theme.BANDERASTheme
-import com.example.banderas.Screens.BanderaMexico
+import com.example.banderas.Screens.Bandera_Reino_Unido
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BANDERASTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BanderaMexico(
+                    Bandera_Reino_Unido(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
